@@ -1,0 +1,16 @@
+Package: bergeys.webscraper
+Type: Package
+Title: Web Scraping for Bergey's Manual
+Version: 0.1.0
+Author: Jonathan Ye <jonathanye2003@gmail.com>
+Maintainer: Jonathan Ye <jonathanye2003@gmail.com>
+Description: This package contains a function that scrapes
+      the genus and abstract for microbes in Bergey's 
+      manual.
+License: GPL-3
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 7.1.0
+Imports:
+      rvest,
+      tidyverse
