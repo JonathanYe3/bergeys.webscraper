@@ -6,11 +6,16 @@
 #' from articles in Bergey's Manual.
 #'
 #' @param a,b
-#' A range of articles to scrape.
+#' a and b should be integers where b > a. This
+#' parameter defines a range of articles for web
+#' scraping.
 #'
 #' @return
 #' A data.frame with genera in the first column
 #' and abstracts in the second.
+#'
+#'@importFrom magrittr %>%
+#'@import dplyr
 #'
 #' @export
 readBmanual <- function(a,b){
@@ -21,27 +26,27 @@ readBmanual <- function(a,b){
 
       #Get genus
       extract_genus <- function(url){
-            data <- read_html(url)
+            data <- xml2::read_html(url)
             f_genus <- data %>%
-                  html_nodes(".citation__title i") %>%
-                  html_text() %>%
-                  as_tibble()
+                  rvest::html_nodes(".citation__title i") %>%
+                  rvest::html_text() %>%
+                  tibble::as_tibble()
       }
 
       #Get paragraph
       extract_paragraph <- function(url){
-            data <- read_html(url)
+            data <- xml2::read_html(url)
             f_paragraph <- data %>%
-                  html_nodes("#section-1-en p:nth-child(3)") %>%
-                  html_text() %>%
-                  as_tibble()
+                  rvest::html_nodes("#section-1-en p:nth-child(3)") %>%
+                  rvest::html_text() %>%
+                  tibble::as_tibble()
       }
 
-      genus_name <- map_dfr(Bergeys, extract_genus)
-      paragraph_info <- map_dfr(Bergeys, extract_paragraph)
+      genus_name <- purrr::map_dfr(Bergeys, extract_genus)
+      paragraph_info <- purrr::map_dfr(Bergeys, extract_paragraph)
 
       my_df <- data.frame(genus_name, paragraph_info) %>%
-            mutate(across(where(is.character), str_trim))
+            mutate_if(is.character, trimws)
 
       return(my_df)
 }

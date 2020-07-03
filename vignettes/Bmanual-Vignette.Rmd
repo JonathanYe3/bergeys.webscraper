@@ -1,0 +1,30 @@
+---
+title: "bergeys.webscraper Introduction"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{bergeys.webscraper Introduction}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+## bergeys.webscraper functionality
+
+bergeys.webscraper only has one function: readBmanual(). This function
+extracts the genus and abstract from a range of articles in Bergey's Manual. In the example below, readBmanual() will extract the genus and abstract from https://onlinelibrary.wiley.com/doi/10.1002/9781118960608.gbm00001 to https://onlinelibrary.wiley.com/doi/10.1002/9781118960608.gbm00005
+
+```{r, eval=FALSE}
+readBmanual(1L, 5L)
+```
+
+This package is a true one-trick-pony.
+
+```{r setup}
+library(bergeys.webscraper)
+```

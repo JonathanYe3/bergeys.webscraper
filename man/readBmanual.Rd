@@ -7,7 +7,9 @@
 readBmanual(a, b)
 }
 \arguments{
-\item{a, b}{A range of articles to scrape.}
+\item{a, b}{a and b should be integers where b > a. This
+parameter defines a range of articles for web
+scraping.}
 }
 \value{
 A data.frame with genera in the first column
