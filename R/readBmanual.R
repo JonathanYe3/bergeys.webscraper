@@ -30,7 +30,7 @@ readBmanual <- function(a,b){
             f_genus <- data %>%
                   rvest::html_nodes(".citation__title i") %>%
                   rvest::html_text() %>%
-                  tibble::as_tibble()
+                  {if(length(.) == 0) NA else .}
       }
 
       #Get paragraph
@@ -39,14 +39,17 @@ readBmanual <- function(a,b){
             f_paragraph <- data %>%
                   rvest::html_nodes("#section-1-en p:nth-child(3)") %>%
                   rvest::html_text() %>%
-                  tibble::as_tibble()
+                  {if(length(.) == 0) NA else .}
       }
 
+      safe_genus <- purrr::possibly(extract_genus, otherwise = NA)
+      safe_abstract <- purrr::possibly(extract_paragraph, otherwise = NA)
+
       genus_name <- purrr::map_dfr(Bergeys, extract_genus)
-      paragraph_info <- purrr::map_dfr(Bergeys, extract_paragraph)
+      paragraph_info <- purrr::map_dfr(Bergeys, extract_paragraph) %>%
+            trimws(which = c("left"))
 
-      my_df <- data.frame(genus_name, paragraph_info) %>%
-            mutate_if(is.character, trimws)
+      my_df <- tibble::tibble(genus = genus_name,
+                              abstract = paragraph_info)
 
-      return(my_df)
 }
