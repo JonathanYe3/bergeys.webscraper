@@ -51,5 +51,4 @@ readBmanual <- function(a,b){
    my_df <- tibble::tibble(genus = genus_name,
                            abstract = paragraph_info)
 
-
 }
