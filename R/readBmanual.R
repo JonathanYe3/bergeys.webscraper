@@ -33,7 +33,7 @@ readBmanual <- function(a,b){
          {if(length(.) == 0) NA else .}
    }
 
-   #Get paragraph
+   #Get abstract
    extract_paragraph <- function(url){
       data <- xml2::read_html(url)
       f_paragraph <- data %>%
